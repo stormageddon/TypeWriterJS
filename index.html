@@ -1,11 +1,21 @@
 <html>
 
 <body>
-    <type-writer el-id="typewriter"></type-writer>
-    <input type="button" onclick="typeStr('test')" value="Click Me" />
-    <div id="typewriter"></div>
+
+    <input type="button" onclick="typeStr('test', 100)" value="Click Me" />
+    <p id="hero"></p>
+
 
     <script type="text/javascript" src="typewriter.js"></script>
+    <script type="text/javascript">
+        let tw = new TypeWriter('hero');
+        tw.typeStr('Hero Test', { delay: 500 }).reverse({ delay: 600 }).go()
+
+        //setTimeout(function () {
+        //tw.remove(20);
+        //  tw.reverse();
+        //}, 3000)
+    </script>
 </body>
 
 </html>
