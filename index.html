@@ -1,10 +1,7 @@
 <html>
 
 <body>
-
-    <input type="button" onclick="typeStr('test', 100)" value="Click Me" />
     <p id="hero"></p>
-
 
     <script type="text/javascript" src="typewriter.js"></script>
     <script type="text/javascript">
@@ -15,8 +12,10 @@
             .typeStr('mode, Activate!', { delay: 100 })
             .wait(1000)
             .remove(20)
-            .go(true);
+            .go(loop = true);
     </script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    </link>
 </body>
 
 </html>
