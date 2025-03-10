@@ -9,12 +9,10 @@
     <script type="text/javascript" src="typewriter.js"></script>
     <script type="text/javascript">
         let tw = new TypeWriter('hero');
-        tw.typeStr('Hero Test', { delay: 500 }).reverse({ delay: 600 }).go()
-
-        //setTimeout(function () {
-        //tw.remove(20);
-        //  tw.reverse();
-        //}, 3000)
+        tw.typeStr('Hero Test', { delay: 1000 })
+            .remove(4)
+            .typeStr('mode, Activate!', { delay: 200 })
+            .go();
     </script>
 </body>
 

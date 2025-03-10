@@ -2,13 +2,19 @@ class TypeWriter {
     attachedEl = null;
 
     defaultOpts = {
-        delay: 500
+        delay: 100
     }
 
     queue = []
+    isProcessing = false;
 
     constructor(elId) {
         this.attachedEl = document.getElementById(elId);
+    }
+
+    addToQueue(fn, delay = 0) {
+        this.queue.push({ fn, delay });
+        return this;
     }
 
     typeStr(str, opts = {}) {
@@ -17,55 +23,48 @@ class TypeWriter {
 
         let elements = str.split('');
         for (const [index, elem] of elements.entries()) {
-            (function (tw) {
-                tw.queue.push(
-                    new Promise((resolve, reject) => {
-
-                        setTimeout(() => {
-                            console.log('add');
-                            tw.attachedEl.innerHTML += elem
-                            //resolve();
-                        }, index * options.delay)
-                    })
-                )
-            })(this);
-        }
-        //        console.log(this.queue);
-
-        return this;
-    }
-
-    reverse(opts = {}) {
-        let options = { ...this.defaultOpts, ...opts };
-
-        let text = this.attachedEl.innerHTML;
-        let counter = 0;
-        console.log(`text: ${this.attachedEl.innerHTML}`);
-        for (let i = text.length - 1; i >= 0; i--) {
-            (function (writer) {
-                console.log('here');
-                writer.queue.push(new Promise(() => {
-                    setTimeout(function () {
-                        console.log('reverse');
-                        text = text.substring(0, i);
-                        writer.attachedEl.innerHTML = text;
-                    }, counter * options.delay)
-                    counter++;
-                }));
-            })(this);
+            this.addToQueue(() => { tw.attachedEl.innerHTML += elem }, options.delay);
         }
 
         return this;
     }
 
     remove(num, opts = {}) {
-        console.error('Not yet implemented');
+        let options = { ...this.defaultOpts, ...opts };
+
+        for (let i = 0; i < num; i++) {
+            this.addToQueue(() => { tw.attachedEl.innerHTML = tw.attachedEl.innerHTML.substring(0, tw.attachedEl.innerHTML.length - 1) }, options.delay);
+        }
+
+        return this;
     }
 
     async go() {
         console.log(this.queue);
-        await Promise.all(this.queue).then((values) => {
-            console.log('done!');
-        });
+        this.isProcessing = true;
+
+        while (this.queue.length > 0) {
+            const { fn, delay } = this.queue.shift();
+
+
+
+            // FWait for the delay before executing the function
+            await this._delay(delay);
+
+            // Execute the function
+            fn();
+        }
+        this.isProcessing = false;
+    }
+
+    _delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+}
+
+class QueueItem {
+    constructor(func, delay) {
+        this.func = func;
+        this.delay = delay;
     }
 }
