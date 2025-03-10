@@ -1,6 +1,8 @@
 # TypeWriterJS
 ### A **simple** and **elegant** typewriter effect built in pure Javascript.
 
+![TypeWriterJS Example](demo.gif "TypeWriterJS Example")
+
 To include TypewriterJS in your application, you can either fork this repository, or simply include it from jsdelivr in a script tag!
 
     <script src="https://cdn.jsdelivr.net/gh/stormageddon/TypeWriterJS/typewriter.js"></script>
