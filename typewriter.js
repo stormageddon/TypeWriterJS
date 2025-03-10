@@ -6,6 +6,7 @@ class TypeWriter {
     }
 
     queue = []
+    full_queue = null;
     isProcessing = false;
 
     constructor(elId) {
@@ -39,22 +40,34 @@ class TypeWriter {
         return this;
     }
 
-    async go() {
-        console.log(this.queue);
+    clear(clearImmediately = false) {
+        tw.attachedEl.innerHTML = ''
+        return this;
+    }
+
+    async go(loop = false) {
+
         this.isProcessing = true;
+        if (loop)
+            this.addToQueue(this.clear, 300);
 
         while (this.queue.length > 0) {
             const { fn, delay } = this.queue.shift();
 
+            if (loop) {
+                this.addToQueue(fn, delay);
+            }
 
 
-            // FWait for the delay before executing the function
+
+            // Wait for the delay before executing the function
             await this._delay(delay);
 
             // Execute the function
             fn();
         }
         this.isProcessing = false;
+
     }
 
     _delay(ms) {
