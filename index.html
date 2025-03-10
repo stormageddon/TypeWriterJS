@@ -8,10 +8,13 @@
 
     <script type="text/javascript" src="typewriter.js"></script>
     <script type="text/javascript">
-        let tw = new TypeWriter('hero');
+        let tw = new TypeWriter('hero', { cursor: '_' });
         tw.typeStr('Hero Test', { delay: 100 })
+            .wait(1000)
             .remove(4)
             .typeStr('mode, Activate!', { delay: 100 })
+            .wait(1000)
+            .remove(20)
             .go(true);
     </script>
 </body>
